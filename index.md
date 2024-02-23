@@ -53,7 +53,7 @@ We expect to be able to quantify the improvement in fake news classification usi
 
 ## Gantt Chart
 
-[Gantt Chart](https://gtvault-my.sharepoint.com/:x:/r/personal/dmishra45_gatech_edu/_layouts/15/Doc.aspx?sourcedoc=%7B939D453C-9F97-4172-93A8-FAC4DBBBFCFC%7D&file=GanttChart%20-%20Spring_v1.xlsx&action=default&mobileredirect=true){:target="blank"}
+[Gantt Chart](https://gtvault-my.sharepoint.com/:x:/g/personal/dmishra45_gatech_edu/ETxFnZOXn3JBk6j6xNu7_PwBAAGmj1Igddgi3tMxG-g3pw){:target="blank"}
 
 ## Contribution Table
 
