@@ -1,5 +1,5 @@
-title: Slate theme
-description: Slate is a theme for GitHub Pages.
+title: Whose news is it anyway?
+description: An LLM-based system to detect AI-generated news.
 show_downloads: true
 google_analytics:
 theme: jekyll-theme-slate
