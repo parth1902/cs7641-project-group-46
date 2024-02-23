@@ -17,7 +17,7 @@ This website has been developed as part of the final project for CS 7641: Machin
 
 ## Table of Contents
 
-1. [Introduction/Backgorund](#introduction-backgorund)
+1. [Introduction/Background](#introduction/background)
 2. [Problem Definition](#problem-definition)
 3. [Methods](#methods)
 4. [Potential Results](#potential-results)
@@ -25,7 +25,7 @@ This website has been developed as part of the final project for CS 7641: Machin
 6. [Gantt Chart](#gantt-chart)
 7. [Contribution Table](#contribution-table)
 
-## Introduction/Backgorund
+## Introduction/Background
 Our project aims to tackle the issue of AI-based fake news generation by training models to classify a given article as human-written or machine-generated. 
 
 Previous work indicates that it is difficult for humans to distinguish between human-written news and GPT-3 news, highlighting the importance of fake news detection systems [3]. However, it is not clear whether larger models will necessarily be better at discriminating between the two types of news. [1] indicates that language models which are good at generating fake news are the best at detecting fake news, which leads us to believe LLMs would perform well at this task. Surprisingly, [2] observed that Transformer-based models may not generalize well, while traditional models may generalize better and provide an understanding of which features are important. 
@@ -53,7 +53,7 @@ We expect to be able to quantify the improvement in fake news classification usi
 
 ## Gantt Chart
 
-[Gantt Chart](https://gtvault-my.sharepoint.com/:x:/r/personal/dmishra45_gatech_edu/_layouts/15/Doc.aspx?sourcedoc=%7BDA3309D5-6333-485C-982B-E5EFEF764199%7D&file=GanttChart%20-%20Spring.xlsx&action=default&mobileredirect=true){:target="blank"}
+[Gantt Chart](https://gtvault-my.sharepoint.com/:x:/r/personal/dmishra45_gatech_edu/_layouts/15/Doc.aspx?sourcedoc=%7B939D453C-9F97-4172-93A8-FAC4DBBBFCFC%7D&file=GanttChart%20-%20Spring_v1.xlsx&action=default&mobileredirect=true){:target="blank"}
 
 ## Contribution Table
 
