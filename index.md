@@ -20,7 +20,7 @@ This website has been developed as part of the final project for CS 7641: Machin
 1. [Introduction/Background](#introduction/background)
 2. [Problem Definition](#problem-definition)
 3. [Methods](#methods)
-4. [Potential Results](#potential-results)
+4. [Results and Discussion](#results-and-discussion)
 5. [References](#references)
 6. [Gantt Chart](#gantt-chart)
 7. [Contribution Table](#contribution-table)
@@ -35,16 +35,69 @@ The dataset we plan to use was used to develop the GROVER model [1], which can g
 ## Problem Definition
 Using the GROVER dataset, we plan to both fine-tune a Large Language Model (LLM) and train a smaller traditional ML model to classify news articles into machine-generated and human-written.
 
-## Methods
+<!-- ## Methods
 1. We wish to fine-tune an LLM for classification on the GROVER dataset. We have tentatively chosen OpenLLaMA – 7B as our model. We have access to the 16GB Nvidia Tesla T4 GPU via Google Colab Pro. It is feasible to fine-tune a 7B LLM on such hardware using QLoRA for compression and approximate fine-tuning. 
 2. We aim to train a smaller classification model on the same dataset. We plan to use TF-IDF for feature generation, PCA for dimensionality reduction, and XGBoost for classification. 
 3. If we have sufficient time, we plan to use topic modeling and clustering techniques, based on the BERTopic pipeline, to cluster articles in the GROVER dataset based on news topics. Based on this, we aim to analyze whether machine-generated news might be easier to detect in certain domains over others. 
-4. Since the GROVER dataset consists of mostly text data, we would likely need multiple preprocessing techniques to perform TF-IDF. We plan to use spaCy for tokenization, stop-word removal, and lemmatization. 
+4. Since the GROVER dataset consists of mostly text data, we would likely need multiple preprocessing techniques to perform TF-IDF. We plan to use spaCy for tokenization, stop-word removal, and lemmatization.  -->
 
-## Potential Results
+<!-- ## Potential Results
 Our project goals are to train reliable discriminative classifiers to identify machine-generated news articles. As our problem is a classification problem, we would like to compare our classifiers on the following metrics: accuracy, precision, recall, F1-score. After topic modeling and clustering, we will have a topic-label associated with each article. As such, we will also compare category-wise precision, recall, and macro-averaged F1-score. 
 
-We expect to be able to quantify the improvement in fake news classification using an LLM and provide a low-resource technique for fake news detection. 
+We expect to be able to quantify the improvement in fake news classification using an LLM and provide a low-resource technique for fake news detection.  -->
+
+## Methods
+
+#### Data Preprocessing
+
+1. **Tokenization:** 
+   - The titles are tokenized into individual words using NLTK's word tokenize function.
+2. **Lowercasing:** 
+   - All words are converted to lowercase to ensure uniformity.
+3. **Removing non-alphabetic tokens:** 
+   - Punctuation and other non-alphabetic tokens are filtered out.
+4. **Stopword removal:** 
+   - Stopwords, which are common words that do not carry significant meaning (e.g., 'the', 'is', 'and'), are removed from the tokenized words using NLTK's English stopwords list.
+5. **Word not in Pretrained Embeddings:** 
+   - Further, the words which are not there in word2vec/glove embeddings are removed from the headings.
+
+
+#### Models Implemented 
+ 
+We wanted to use clustering on the news headlines from our dataset to divide them into topics. Initially we used Word2vec for word embeddings, specifically word2vec-google-news-300. The model gave a word vector of 300 elements for each word. The data went through some further preprocessing to remove words which were not in the Word2vec vocabulary and taking the average of all words in a headline to have a vector for each headline. Along with it, we tried embeddings through glove model. On glove embeddings as well, averaging of embeddings was done. For topic clustering, we adopted two approaches. The first one was k-means clustering with 10 clusters on the entire headline dataset. The second approach was a semi-supervised one. We decided the news topics beforehand and calculated the word vectors for each. We took the cosine similarity of each headline with each topic and picked the best match in each case. This enabled us to fit the headlines to an existing set of topics.  
+ 
+We have also made progress on finetuning a Llama 2 7B model on the GROVER dataset by setting up a PACE cluster as the environment. We explored LLM PEFT fine-tuning techniques such as LORA and QLORA. We decided to implement QLORA given better memory performance compared to LORA.  
+
+## Results and discussion
+
+#### Visualizations
+
+We performed K means clustering for different cluster values and observed the sum of squared distances. The elbow in the graph is not as well-defined as we hoped, but we picked k = 18. This is close to the number we picked for cosine similarity.
+
+![Alt text](assets/images/elbow_chart.png "Optional title")
+ 
+Along with it, we also performed cosine similarity of topics with headlines for which the scatter plot of cluster centers looks like this using t-SNE.
+
+![Alt text](assets/images/cluster_centers.png "Optional title")
+ 
+We tried doing cosine similarity predictions with both Word2vec and Glove, and the results using Word2vec embeddings are much better. Here is an example of some news headlines and their topic prediction. 
+
+![Alt text](assets/images/word2vec_predictions.png "Optional title")
+
+#### Quantitative Metrics
+
+This k-means clustering gave a sum of squared distances of 2238.54 with k = 18. 
+
+#### Analysis of Model 
+
+We chose k-means clustering over other methods like DBScan as we had an idea about the number of clusters. We tried different values of k, and finally landed on k = 18 as the best one. This clustering gave a sum of squared distances of 2238.54. This score, and the visualizations show that the clusters are not as well-defined as we hoped they would be. One reason for this could be the high dimension of the dataset and adopting a simple average technique for getting the headline word vector. We will aim to improve on this in the coming month and use a more refined topic modelling technique like BERTopic. 
+
+
+
+#### Next Steps 
+
+1. We are planning to run inference on Llama 2 7B as the baseline and finetune it using QLoRA on Georgia Tech’s PACE cluster environment and compare both methods. 
+2. We also plan to use more complex topic clustering methods like BERTopic to see if that may improve the performance of clustering. 
 
 ## References
 1. Zellers, R., Holtzman, A., Rashkin, H., Bisk, Y., Farhadi, A., Roesner, F., & Choi, Y. (2019). Defending Against Neural Fake News. ArXiv. /abs/1905.12616 
@@ -59,8 +112,8 @@ We expect to be able to quantify the improvement in fake news classification usi
 
 | Name | Contribution |
 |----------|----------|
-| Vamsi Kalidindi | Introduction & Problem Statement | 
-| Divij Mishra | Methods | 
-| Karan Nahar | Potential Dataset & Timeline |
-| Parth Athale | Github Page |
-| Priyanka Singh | Potential Results |
+| Vamsi Kalidindi | LLM Fine Tuning | 
+| Divij Mishra | Setting up PACE cluster | 
+| Karan Nahar | Word embeddings and data preprocessing |
+| Parth Athale | Clustering and visualizations |
+| Priyanka Singh | LLM Fine Tuning |
