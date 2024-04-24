@@ -76,7 +76,20 @@ For the midterm checkpoint, we primarily focused on topic clustering our news ar
 1. **Article Truncation** 
 	- The news articles in the dataset typically consist of over 1000 words, with the maximum being 13000 words. Since LLaMa-2 7B has a token limit of 4096 (roughly 0.75 tokens per word), we needed to truncate the article size. To be very conservative, we truncated every article to <= 800 words. We made sure to keep the maximum number of sentences while ensuring the word count was under 800. 
 2. **Prompt Engineering**
-	- As we’re doing instructional fine-tuning, we need to set up training prompts for the model. The prompt we used was 
+	- As we’re doing instructional fine-tuning, we need to set up training prompts for the model. The prompt we used was:
+	```sh
+    Classify the news excerpt enclosed between <input></input> tags 
+    as being written by a human or machine. 
+    Return the answer as the corresponding label "human" or "machine". 
+    You may refer to the example below:
+	Example start. 
+    <input>Sample excerpt from a news article.</input>  
+    Output: machine 
+    Example end. 
+    Please classify the following news excerpt: 
+    <input>{text}</input>  
+    Output: {label}
+    ``` 
 3. **Tokenization**
 	- Used LLaMA-2 7B’s default tokenizer from HuggingFace.
 
@@ -151,7 +164,7 @@ In an attempt to scale our performance up, we fine-tuned on 2500 data for 4 epoc
 
 The other hyperparameters we used for fine-tuning are available in our code. Further experimentation with the hyperparameters might allow us to use more data and achieve better metrics. 
  
-The GROVER paper trains BERT-based and GROVER-based models as discriminators. <do we want to include this?> Note that they train on a different task – their discriminators also use other parts of the article metadata, e.g. author, date, etc for classification, which might explain their higher accuracies.
+The GROVER paper trains BERT-based and GROVER-based models as discriminators. Note that they train on a different task – their discriminators also use other parts of the article metadata, e.g. author, date, etc for classification, which might explain their higher accuracies.
 
 ![Alt text](assets/images/llm_results_5.png "Optional title")
 
@@ -246,7 +259,7 @@ We can expand our analysis by incorporating full news articles instead of just h
 | Name | Contribution |
 |----------|----------|
 | Vamsi Kalidindi | LLM Fine Tuning | 
-| Divij Mishra | Setting up PACE cluster | 
-| Karan Nahar | Word embeddings and data preprocessing |
+| Divij Mishra | LLM Classification | 
+| Karan Nahar | BERTopic Modelling |
 | Parth Athale | Clustering and visualizations |
 | Priyanka Singh | LLM Fine Tuning |
